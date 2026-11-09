@@ -138,6 +138,10 @@ public class TableroVisual extends JFrame implements Refrescable{
         btnRetiro.setBounds(10, 540, 245, 45);
         panel.add(btnRetiro);
         btnRetiro.addActionListener(e -> retirarse());
+        
+        EtiquetaUsuario lblUsuario = new EtiquetaUsuario();
+        lblUsuario.setBounds(10, 500, 245, 20);
+        panel.add(lblUsuario);
     }
 
     @Override

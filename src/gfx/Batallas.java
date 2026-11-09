@@ -24,7 +24,11 @@ public class Batallas extends JFrame implements Refrescable{
         btnCerrar.setBounds(150, 245, 120, 30);
         add(btnCerrar);
         btnCerrar.addActionListener(e -> dispose());
-
+        
+        EtiquetaUsuario lblUsuario = new EtiquetaUsuario();
+        lblUsuario.setBounds(20, 285, 250, 20);
+        add(lblUsuario);
+        
         refrescar();
     }
 

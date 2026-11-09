@@ -13,7 +13,7 @@ public class Login extends JFrame{
         this.menuInicial = menuInicial;
 
         setTitle("Marvel Stratego - Log In");
-        setSize(360, 230);
+        setSize(430, 230);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(null);
@@ -33,13 +33,17 @@ public class Login extends JFrame{
         txtPass = new JPasswordField();
         txtPass.setBounds(140, 70, 170, 25);
         add(txtPass);
-
+        
+        VerificacionPassword verP = new VerificacionPassword(txtPass);
+        verP.setBounds(320,70,70,25);
+        add(verP);
+        
         JButton btnEntrar = new JButton("Entrar");
-        btnEntrar.setBounds(50, 130, 110, 30);
+        btnEntrar.setBounds(70, 130, 110, 30);
         add(btnEntrar);
 
         JButton btnCancelar = new JButton("Cancelar");
-        btnCancelar.setBounds(190, 130, 110, 30);
+        btnCancelar.setBounds(210, 130, 110, 30);
         add(btnCancelar);
 
         btnEntrar.addActionListener(e -> intentarLogin());

@@ -27,7 +27,11 @@ public class Ranking extends JFrame implements Refrescable{
         btnCerrar.setBounds(150, 315, 120, 30);
         add(btnCerrar);
         btnCerrar.addActionListener(e -> dispose());
-
+        
+        EtiquetaUsuario lblUsuario = new EtiquetaUsuario();
+        lblUsuario.setBounds(20, 345, 250, 20);
+        add(lblUsuario);
+        
         refrescar();
     }
 

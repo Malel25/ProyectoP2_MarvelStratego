@@ -50,8 +50,34 @@ public class SistemaJugadores{
         if (password == null || password.length() != 5){
             throw new PasswordInvalidoException("El password debe tener exactamente 5 caracteres.");
         }
+        boolean mayuscula = false;
+        boolean minuscula = false;
+        boolean numero = false;
+        boolean especial = false;
+        for(int i = 0; i < password.length(); i++){
+            char c = password.charAt(i);
+            if(Character.isUpperCase(c)) {
+                mayuscula = true;
+            }else if(Character.isLowerCase(c)){
+                minuscula = true;
+            }else if(Character.isDigit(c)){
+                numero = true;
+            }else if(!Character.isWhitespace(c)){
+                especial = true;
+            }
+        }
+        if (!(mayuscula && minuscula && numero && especial)) {
+            throw new PasswordInvalidoException("El password debe tener al menos una mayuscula, "
+                    + "una minuscula, un numero y un caracter especial.");
+        }
     }
-
+    
+    public static void validarConfirmacion(String password, String confirmacion) throws PasswordInvalidoException {
+        if (!password.equals(confirmacion)) {
+            throw new PasswordInvalidoException("Los passwords no coinciden. Intente de nuevo.");
+        }
+    }
+    
     public static Jugador buscarJugador(String username){
         for (Jugador j : listaJugadores) {
             if (j.getUsername().equalsIgnoreCase(username)){

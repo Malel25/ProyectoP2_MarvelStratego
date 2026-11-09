@@ -145,7 +145,19 @@ public class MenuPrincipal extends JFrame{
         Jugador rival = SistemaJugadores.buscarJugador((String) cmbOponente.getSelectedItem());
         Bando miBando = (Bando) cmbBando.getSelectedItem();
         ModoJuego modo = (ModoJuego) cmbModo.getSelectedItem();
-
+        
+        String passRival = pedirPassword("Login del rival (" + rival.getUsername() + ").\nIngrese su password para iniciar la partida:");
+        if (passRival == null) {
+            return;
+        }
+        try {
+            SistemaJugadores.verificarPassword(rival, passRival);
+        } catch (CredencialesInvalidasException ex) {
+            JOptionPane.showMessageDialog(this, "Password del rival incorrecto. No se inicia la partida.",
+                    "Error de Log In", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         Partida partida;
         if(miBando == Bando.HEROES) {
             partida = new Partida(yo, rival, modo);
@@ -166,7 +178,8 @@ public class MenuPrincipal extends JFrame{
 
     private String pedirPassword(String mensaje) {
         JPasswordField campo = new JPasswordField();
-        int op = JOptionPane.showConfirmDialog(this, new Object[]{mensaje, campo}, "Password",
+        VerificacionPassword verificacion = new VerificacionPassword(campo);
+        int op = JOptionPane.showConfirmDialog(this, new Object[]{mensaje, campo, verificacion}, "Password",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         if (op != JOptionPane.OK_OPTION){
             return null;
@@ -180,13 +193,19 @@ public class MenuPrincipal extends JFrame{
         if(passActual == null){
             return;
         }
-        String nueva = pedirPassword("Ingrese su nueva password (5 caracteres exactos):");
+        String nueva = pedirPassword("Ingrese su nuevo password (5 caracteres con mayuscula, minuscula, numero y simbolo):");
         if (nueva == null){
             return;
         }
+        String confirmar = pedirPassword("Confirme su nuevo password:");
+        if(confirmar == null){
+            return;
+        }
         try {
+            SistemaJugadores.verificarPassword(actual, passActual);
+            SistemaJugadores.validarConfirmacion(nueva, confirmar);
             SistemaJugadores.cambiarPassword(actual, passActual, nueva);
-            JOptionPane.showMessageDialog(this, "Password actualizada con exito");
+            JOptionPane.showMessageDialog(this, "Password actualizado con exito.");
         } catch (CredencialesInvalidasException | PasswordInvalidoException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

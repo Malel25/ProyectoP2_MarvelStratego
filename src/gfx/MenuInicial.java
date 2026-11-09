@@ -37,7 +37,7 @@ public class MenuInicial extends JFrame{
         btnLogin.setBounds(150, 150, 260, 75);
         panel.add(btnLogin);
 
-        btnCrearPlayer = new BotonMarvel("CREAR PLAYER", null, new Color(200, 40, 55), new Color(110, 15, 30));
+        btnCrearPlayer = new BotonMarvel("CREAR JUGADOR", null, new Color(200, 40, 55), new Color(110, 15, 30));
         btnCrearPlayer.setBounds(150, 250, 260, 75);
         panel.add(btnCrearPlayer);
 

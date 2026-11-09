@@ -8,10 +8,11 @@ import javax.swing.*;
 public class CrearJugador extends JFrame{
     private JTextField txtUser;
     private JPasswordField txtPass;
+    private JPasswordField txtConfirmar;
 
     public CrearJugador(){
-        setTitle("Marvel Stratego - Crear Player");
-        setSize(400, 230);
+        setTitle("Marvel Stratego - Crear Jugador");
+        setSize(470, 290);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(null);
@@ -31,13 +32,33 @@ public class CrearJugador extends JFrame{
         txtPass = new JPasswordField();
         txtPass.setBounds(180, 70, 170, 25);
         add(txtPass);
+        
+        VerificacionPassword ver = new VerificacionPassword(txtPass);
+        ver.setBounds(360, 70, 70, 25);
+        add(ver);
 
+        JLabel lblConfirmar = new JLabel("Confirmar password:");
+        lblConfirmar.setBounds(30, 110, 150, 25);
+        add(lblConfirmar);
+
+        txtConfirmar = new JPasswordField();
+        txtConfirmar.setBounds(180, 110, 170, 25);
+        add(txtConfirmar);
+
+        VerificacionPassword verConfirmar = new VerificacionPassword(txtConfirmar);
+        verConfirmar.setBounds(360, 110, 70, 25);
+        add(verConfirmar);
+        
+        JLabel lblReglas = new JLabel("Debe tener mayuscula, minuscula, numero y simbolo (ej: Ab1#x)");
+        lblReglas.setBounds(30, 145, 420, 20);
+        add(lblReglas);
+        
         JButton btnRegistrar = new JButton("Registrar");
-        btnRegistrar.setBounds(60, 125, 120, 30);
+        btnRegistrar.setBounds(80, 180, 120, 30);
         add(btnRegistrar);
 
         JButton btnCancelar = new JButton("Cancelar");
-        btnCancelar.setBounds(210, 125, 120, 30);
+        btnCancelar.setBounds(230, 180, 120, 30);
         add(btnCancelar);
 
         btnRegistrar.addActionListener(e -> registrar());
@@ -47,13 +68,15 @@ public class CrearJugador extends JFrame{
     private void registrar(){
         String user = txtUser.getText().trim();
         String pass = new String(txtPass.getPassword());
+        String confirmar = new String(txtConfirmar.getPassword());
         if(user.isEmpty()){
             JOptionPane.showMessageDialog(this, "El username no puede estar vacio", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         try{
+            SistemaJugadores.validarConfirmacion(pass, confirmar);
             SistemaJugadores.registrarJugador(user, pass);
-            JOptionPane.showMessageDialog(this, "Player creado con exito!");
+            JOptionPane.showMessageDialog(this, "Jugador creado con exito!");
             dispose();
         }catch(UsuarioDuplicadoException | PasswordInvalidoException ex){
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

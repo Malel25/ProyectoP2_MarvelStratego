@@ -56,7 +56,11 @@ public class MiPerfil extends JFrame implements Refrescable{
             }
         });
         btnCerrar.addActionListener(e -> dispose());
-
+        
+        EtiquetaUsuario lblUsuario = new EtiquetaUsuario();
+        lblUsuario.setBounds(20, 385, 250, 20);
+        add(lblUsuario);
+        
         refrescar();
     }
 
